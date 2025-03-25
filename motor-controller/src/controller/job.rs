@@ -1,11 +1,16 @@
 //! Job Models
 
-#[derive(Debug, Clone, Copy)]
+use serde::Deserialize;
+
+#[derive(Debug, Clone, Copy, Deserialize)]
 pub enum MotorDirection {
+    #[serde(rename = "f")]
     Forward,
+    #[serde(rename = "b")]
     Backward,
 }
 
+#[derive(Debug, Clone, Copy, Deserialize)]
 pub struct MotorJob {
     pub motor_index: usize,
     pub direction: MotorDirection,
