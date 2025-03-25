@@ -160,6 +160,8 @@ fn main() -> Result<()> {
                 return Ok(());
             }
 
+            info!("Received job: {:?}", job);
+
             {
                 let queue_arc = to_queue.clone();
                 let to_queue = queue_arc.write();
@@ -179,7 +181,6 @@ fn main() -> Result<()> {
 
     println!("Server awaiting connection");
 
-    // Prevent program from exiting
     loop {
         // Check if there are any jobs in the queue
         let queue_arc = to_queue_clone.clone();
