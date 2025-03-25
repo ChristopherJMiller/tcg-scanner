@@ -1,19 +1,12 @@
+pub mod controller;
 pub mod wifi;
 
-use std::{
-    sync::{Arc, Mutex},
-    thread::sleep,
-    time::Duration,
-};
+use std::{thread::sleep, time::Duration};
 
 use anyhow::{anyhow, Result};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
-    hal::{
-        gpio::PinDriver,
-        i2c::{I2cConfig, I2cDriver},
-        prelude::*,
-    },
+    hal::{gpio::PinDriver, prelude::*},
     http::{
         server::{Configuration, EspHttpServer},
         Method,
@@ -22,7 +15,6 @@ use esp_idf_svc::{
 };
 
 use log::info;
-use shtcx::{shtc3, PowerMode};
 use wifi::wifi;
 
 pub struct Config {
@@ -52,6 +44,8 @@ fn main() -> Result<()> {
         peripherals.modem,
         sysloop,
     )?;
+
+    let pin4 = PinDriver::output(peripherals.pins.gpio4)?;
 
     // Set the HTTP server
     let mut server = EspHttpServer::new(&Configuration::default())?;
